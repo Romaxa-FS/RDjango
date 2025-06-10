@@ -63,11 +63,8 @@ def delete_grade(request, pk):
     return render(request, 'students/delete_grade.html', {'grade': grade})
 
 def report(request):
-    # Средний балл по студентам
     student_averages = Student.objects.annotate(avg_grade=Avg('grade__value'))
-    # Средний балл по предметам
     subject_averages = Subject.objects.annotate(avg_grade=Avg('grade__value'))
-    # Лучший и худший студент
     best_student = student_averages.order_by('-avg_grade').first()
     worst_student = student_averages.order_by('avg_grade').first()
     return render(request, 'students/report.html', {
