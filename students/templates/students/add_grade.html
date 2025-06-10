@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Добавить оценку</title>
+</head>
+<body>
+    <h1>Добавить оценку</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label>Student:</label>
+        <select name="student" required>
+            {% for student in students %}
+                <option value="{{ student.id }}">{{ student.full_name }}</option>
+            {% endfor %}
+        </select><br>
+        <label>Subject:</label>
+        <select name="subject" required>
+            {% for subject in subjects %}
+                <option value="{{ subject.id }}">{{ subject.name }}</option>
+            {% endfor %}
+        </select><br>
+        <label>Grade:</label><input type="number" name="value" required><br>
+        <button type="submit">Добавить</button>
+    </form>
+    <a href="{% url 'home' %}">Вернуться</a>
+</body>
+</html>

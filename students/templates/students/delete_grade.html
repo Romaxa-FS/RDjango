@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Удалить оценку</title>
+</head>
+<body>
+    <h1>Удалить оценку</h1>
+    <p>Вы уверены, что хотите удалить {{ grade.value }} для {{ grade.student.full_name }} в {{ grade.subject.name }}?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Потвердить</button>
+    </form>
+    <a href="{% url 'home' %}">Вернуться</a>
+</body>
+</html>
