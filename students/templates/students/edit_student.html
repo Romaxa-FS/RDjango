@@ -1,15 +1,18 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Редактировать студента</title>
-</head>
-<body>
-    <h1>Редактировать студента</h1>
-    <form method="post">
-        {% csrf_token %}
-        <label>Full Name:</label><input type="text" name="full_name" value="{{ student.full_name }}" required><br>
-        <button type="submit">Сохранить</button>
-    </form>
-    <a href="{% url 'home' %}">Вернуться</a>
-</body>
-</html>
+{% extends 'students/base.html' %}
+{% block title %}Редактировать студента{% endblock %}
+{% block content %}
+    <h1 class="mb-4">Редактировать студента</h1>
+    <div class="card">
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="full_name" class="form-label">ФИО</label>
+                    <input type="text" class="form-control" id="full_name" name="full_name" value="{{ student.full_name }}" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Сохранить</button>
+                <a href="{% url 'home' %}" class="btn btn-secondary">На главную</a>
+            </form>
+        </div>
+    </div>
+{% endblock %}

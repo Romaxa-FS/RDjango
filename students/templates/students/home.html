@@ -1,44 +1,68 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Успеваемость студента</title>
-</head>
-<body>
-    <h1>Система успеваемости студента</h1>
-    <a href="{% url 'add_student' %}">Добавить студента</a> |
-    <a href="{% url 'add_subject' %}">Добавить предмет</a> |
-    <a href="{% url 'add_grade' %}">Добавить оценку</a> |
-    <a href="{% url 'report' %}">Отчет</a>
-    <h2>Студенты</h2>
-    <ul>
-        {% for students in students %}
-            <li>{{ student.full_name }}
-                <a href="{% url 'edit_student' student.pk %}">Редактировать</a>
-                <a href="{% url 'delete_student' student.pk %}">Удалить</a>
-            </li>
-        {% empty %}
-            <li>Нет студентов.</li>
-        {% endfor %}
-    </ul>
-    <h2>Предметы</h2>
-    <ul>
-        {% for subject in subjects %}
-            <li>{{ subject.name }}
-                <a href="{% url 'delete_subject' subject.pk %}">Удалить</a>
-            </li>
-        {% empty %}
-            <li>Нет предметов.</li>
-        {% endfor %}
-    </ul>
-    <h2>Оценки</h2>
-    <ul>
-        {% for grade in grades %}
-            <li>{{ grade.student.full_name }} - {{ grade.subject.name }}: {{ grade.value }}
-                <a href="{% url 'delete_grade' grade.pk %}">Удалить</a>
-            </li>
-        {% empty %}
-            <li>Нет оценок.</li>
-        {% endfor %}
-    </ul>
-</body>
-</html>
+{% extends 'students/base.html' %}
+{% block title %}Учет успеваемости{% endblock %}
+{% block content %}
+    <h1 class="mb-4">Учет успеваемости</h1>
+
+    <div class="card">
+        <div class="card-header">
+            <h2 class="mb-0">Студенты</h2>
+        </div>
+        <div class="card-body">
+            {% if students %}
+                <ul class="list-group">
+                    {% for student in students %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            {{ student.full_name }}
+                            <div>
+                                <a href="{% url 'edit_student' student.pk %}" class="btn btn-sm btn-primary">Редактировать</a>
+                                <a href="{% url 'delete_student' student.pk %}" class="btn btn-sm btn-danger">Удалить</a>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="text-muted">Нет студентов.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h2 class="mb-0">Предметы</h2>
+        </div>
+        <div class="card-body">
+            {% if subjects %}
+                <ul class="list-group">
+                    {% for subject in subjects %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            {{ subject.name }}
+                            <a href="{% url 'delete_subject' subject.pk %}" class="btn btn-sm btn-danger">Удалить</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="text-muted">Нет предметов.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h2 class="mb-0">Оценки</h2>
+        </div>
+        <div class="card-body">
+            {% if grades %}
+                <ul class="list-group">
+                    {% for grade in grades %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            {{ grade.student.full_name }} - {{ grade.subject.name }}: {{ grade.value }}
+                            <a href="{% url 'delete_grade' grade.pk %}" class="btn btn-sm btn-danger">Удалить</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="text-muted">Нет оценок.</p>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}>

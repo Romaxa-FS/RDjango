@@ -1,15 +1,18 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Добавить предмет</title>
-</head>
-<body>
-    <h1>Добавить предмет</h1>
-    <form method="post">
-        {% csrf_token %}
-        <label>Name:</label><input type="text" name="name" required><br>
-        <button type="submit">Добавить</button>
-    </form>
-    <a href="{% url 'home' %}">Вернуться</a>
-</body>
-</html>
+{% extends 'students/base.html' %}
+{% block title %}Добавить предмет{% endblock %}
+{% block content %}
+    <h1 class="mb-4">Добавить предмет</h1>
+    <div class="card">
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="name" class="form-label">Название предмета</label>
+                    <input type="text" class="form-control" id="name" name="name" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Добавить</button>
+                <a href="{% url 'home' %}" class="btn btn-secondary">На главную</a>
+            </form>
+        </div>
+    </div>
+{% endblock %}

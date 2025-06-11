@@ -1,38 +1,65 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Отчет</title>
-</head>
-<body>
-    <h1>Отчет</h1>
-    <h2>Лучший студент</h2>
-    {% if best_student %}
-        <p>{{ best_student.full_name }}: {{ best_student.avg_grade|floatformat:2 }}</p>
-    {% else %}
-        <p>Нет данных.</p>
-    {% endif %}
-    <h2>Худший студент</h2>
-    {% if worst_student %}
-        <p>{{ worst_student.full_name }}: {{ worst_student.avg_grade|floatformat:2 }}</p>
-    {% else %}
-        <p>Нет данных.</p>
-    {% endif %}
-    <h2>Средняя оценка студентов</h2>
-    <ul>
-        {% for student in student_averages %}
-            <li>{{ student.full_name }}: {{ student.avg_grade|floatformat:2 }}</li>
-        {% empty %}
-            <li>Нет данных.</li>
-        {% endfor %}
-    </ul>
-    <h2>Средняя оценка по предмету</h2>
-    <ul>
-        {% for subject in subject_averages %}
-            <li>{{ subject.name }}: {{ subject.avg_grade|floatformat:2 }}</li>
-        {% empty %}
-            <li>Нет данных.</li>
-        {% endfor %}
-    </ul>
-    <a href="{% url 'home' %}">Вернуться</a>
-</body>
-</html>
+{% extends 'students/base.html' %}
+{% block title %}Отчет{% endblock %}
+{% block content %}
+    <h1 class="mb-4">Отчет</h1>
+
+    <div class="card">
+        <div class="card-header">
+            <h2 class="mb-0">Лучший студент</h2>
+        </div>
+        <div class="card-body">
+            {% if best_student %}
+                <p><strong>{{ best_student.full_name }}</strong>: {{ best_student.avg_grade|floatformat:2 }}</p>
+            {% else %}
+                <p class="text-muted">Нет данных.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h2 class="mb-0">Худший студент</h2>
+        </div>
+        <div class="card-body">
+            {% if worst_student %}
+                <p><strong>{{ worst_student.full_name }}</strong>: {{ worst_student.avg_grade|floatformat:2 }}</p>
+            {% else %}
+                <p class="text-muted">Нет данных.</p>
+            {% endif %}
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <h2 class="mb-0">Средняя оценка студентов</h2>
+        </div>
+        <div class="card-body">
+            {% if student_averages %}
+                <ul class="list-group">
+                    {% for student in student_averages %}
+                        <li class="list-group-item">{{ student.full_name }}: {{ student.avg_grade|floatformat:2 }}</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="text-muted">Нет данных.</p>
+            {% endif %}
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <h2 class="mb-0">Средняя оценка по предмету</h2>
+        </div>
+        <div class="card-body">
+            {% if subject_averages %}
+                <ul class="list-group">
+                    {% for subject in subject_averages %}
+                        <li class="list-group-item">{{ subject.name }}: {{ subject.avg_grade|floatformat:2 }}</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="text-muted">Нет данных.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <a href="{% url 'home' %}" class="btn btn-secondary">На главнуюНет данных</a>
+{% endblock %}
